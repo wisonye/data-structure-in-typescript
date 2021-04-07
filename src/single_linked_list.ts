@@ -1,5 +1,5 @@
 /**
- * The `Node` to container Data of `T` and a pointer to
+ * The `Node` to contain data of `T` and a pointer to
  * the next `Node`
  */
 type Node<T> = {
@@ -13,23 +13,25 @@ type Option<T> = T | undefined
  *
  */
 export interface SingleLinkedList<T> {
-
     size: () => number
     getHead: () => Option<T>
     getTail: () => Option<T>
     popHead: () => Option<T>
     popTail: () => Option<T>
     append: (data: T) => void
+    contain: (dataToCheck: T, compareFn?: (data1: T, data2: T) => boolean) => boolean
     printList: () => void
 }
 
 
 /**
- *
+ * Create a `SingleLinkedList` instance which to hold a bunch of data
+ * with the type of `T`
  */
 export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
 
-    // private attributes in closure snapshot
+    // private attributes in closure snapshot, not allowed to access
+    // from outside world
     let size: number = 0
     let head: Node<T> = undefined
     let tail: Node<T> = undefined
@@ -78,8 +80,8 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
 
             // Update the `previous of tail` node's `next` to `undefined` to cut
             // the original tail
-            if (prevTail) { 
-                prevTail.next = undefined 
+            if (prevTail) {
+                prevTail.next = undefined
                 tail = prevTail
             }
             else {
@@ -111,6 +113,31 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
 
             // Remember to increase the size as well
             size++
+        },
+
+        /**
+         * Check whether contains the `dataToCheck` or not.
+         *
+         * If `compareFn` not provided, then just compare the data with `===`
+         * operator.
+         */
+        contain: (dataToCheck: T, compareFn?: (data1: T, data2: T) => boolean): boolean => {
+            if (!head) { return false }
+
+            let currentNode = head
+            let isEqual = false
+
+            while (!isEqual) {
+                if (!currentNode) { break; }
+
+                isEqual = compareFn ? compareFn(currentNode.data, dataToCheck) : Boolean(currentNode.data === dataToCheck)
+                // console.log(`currentNode.data: ${currentNode.data}, dataToCheck: ${dataToCheck}, isEqual: ${isEqual}`)
+                if (isEqual) { return true }
+
+                currentNode = currentNode.next
+            }
+
+            return false
         },
 
         /**
@@ -181,6 +208,16 @@ const testPopFrontOnIntList = () => {
     testList.printList()
 }
 
+const testContainOnIntList = () => {
+    const testList = createIntTestList()
+    console.log(`testIntList contain 0: ${testList.contain(0)}`)
+    console.log(`testIntList contain 1: ${testList.contain(1)}`)
+    console.log(`testIntList contain 2: ${testList.contain(2)}`)
+    console.log(`testIntList contain 3: ${testList.contain(3)}`)
+    console.log(`testIntList contain 4: ${testList.contain(4)}`)
+    console.log(`testIntList contain 5: ${testList.contain(5)}`)
+}
+
 const createPersonTestList = () => {
     const testList = createSingleLinkedList()
 
@@ -235,11 +272,36 @@ const testPopEndOnPersonList = () => {
     personList.printList()
 }
 
+const testContainOnPersonList = () => {
+    const testList = createPersonTestList()
+
+    interface Person {
+        name: string
+        age?: number
+    }
+
+    const compareFn = <T extends Person>(data1: T, data2: T): boolean => {
+        return Boolean(
+            data1.name.trim().toLowerCase() === data2.name.trim().toLowerCase() &&
+            data1.age === data2.age
+        )
+    }
+
+    console.log(`testIntList contain {name: \`Wison Ye\`}: ${testList.contain({ name: `Wison Ye` }, compareFn)}`)
+    console.log(`testIntList contain {name: \`Wison YE\`, age: 80}: ${testList.contain({ name: `Wison YE`, age: 80 }, compareFn)}`)
+    console.log(`testIntList contain {name: \`Wison Ye\`, age: 43}: ${testList.contain({ name: `Wison Ye`, age: 43 }, compareFn)}`)
+    console.log(`testIntList contain {name: \`mike ye\`, age: 8}: ${testList.contain({ name: `mike ye`, age: 8 }, compareFn)}`)
+    console.log(`testIntList contain {name: \`mike ye\`, age: 11}: ${testList.contain({ name: `mike ye`, age: 11 }, compareFn)}`)
+    console.log(`testIntList contain {name: \`Noboday\`}: ${testList.contain({ name: `Noboday` }, compareFn)}`)
+}
+
 testIntList()
-testPopFrontOnIntList()
+testContainOnIntList()
+// testPopFrontOnIntList()
 
 console.log(`\n>>>>>>>>>>>>>>\n`)
 
 testPersonList()
-testPopFrontOnPersonList()
-testPopEndOnPersonList()
+// testPopFrontOnPersonList()
+// testPopEndOnPersonList()
+testContainOnPersonList()
