@@ -6,7 +6,7 @@
     "scripts": {
         "single-linked-list-dev": "ts-node-dev --respawn --debounce --clear ./src/single_linked_list.ts",
         "test": "ts-mocha src/**/*.spec.ts",
-        "test3": "ts-mocha --project ./tsconfig.json --parallel --colors src/**/*.spec.ts -w --watch-extensions ts"
+        "test-watch": "ts-mocha --project ./tsconfig.json --parallel --colors src/**/*.spec.ts -w --watch-extensions ts"
     },
     "keywords": [],
     "author": "",
