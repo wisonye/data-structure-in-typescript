@@ -8,6 +8,7 @@ type Node<T> = {
 }
 
 type Option<T> = T | undefined
+type OptionNode<T> = Node<T> | undefined
 
 /**
  *
@@ -33,8 +34,8 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
     // private attributes in closure snapshot, not allowed to access
     // from outside world
     let size: number = 0
-    let head: Node<T> = undefined
-    let tail: Node<T> = undefined
+    let head: OptionNode<T> = undefined
+    let tail: OptionNode<T> = undefined
 
     // The list instance to return
     const list: SingleLinkedList<T> = {
@@ -124,7 +125,7 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
         contain: (dataToCheck: T, compareFn?: (data1: T, data2: T) => boolean): boolean => {
             if (!head) { return false }
 
-            let currentNode = head
+            let currentNode: Option<Node<T>> = head
             let isEqual = false
 
             while (!isEqual) {
@@ -172,7 +173,7 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
  * Dev test
  */
 const createIntTestList = () => {
-    const testList = createSingleLinkedList();
+    const testList = createSingleLinkedList<number>();
     testList.append(1)
     testList.append(2)
     testList.append(3)
@@ -218,8 +219,13 @@ const testContainOnIntList = () => {
     console.log(`testIntList contain 5: ${testList.contain(5)}`)
 }
 
+interface Person {
+    name: string
+    age?: number
+}
+
 const createPersonTestList = () => {
-    const testList = createSingleLinkedList()
+    const testList = createSingleLinkedList<Person>()
 
     testList.append({ name: `Wison Ye`, age: 43 })
     testList.append({ name: `Fion Li`, age: 28 })
@@ -275,11 +281,6 @@ const testPopEndOnPersonList = () => {
 const testContainOnPersonList = () => {
     const testList = createPersonTestList()
 
-    interface Person {
-        name: string
-        age?: number
-    }
-
     const compareFn = <T extends Person>(data1: T, data2: T): boolean => {
         return Boolean(
             data1.name.trim().toLowerCase() === data2.name.trim().toLowerCase() &&
@@ -305,3 +306,4 @@ testPersonList()
 // testPopFrontOnPersonList()
 // testPopEndOnPersonList()
 testContainOnPersonList()
+
