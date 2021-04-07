@@ -89,6 +89,38 @@ Complexity ordered in form smallest to largest:
     | **Remove at tail** |**O(n)** | **O(1)**
     | **Remove in middle** |**O(n)** | **O(n)**
 
+- Sample:
+
+    - [single_linked_list.ts](https://github.com/wisonye/data-structure-in-typescript/tree/master/src/single_linked_list.ts)
+
+        Run that test with the following command:
+
+        ```bash
+        # Live coding for `single_linked_list.ts`
+        npm run single-linked-list-dev
+
+        # Unit test
+        npm run test
+
+        # Create single_linked_list instance
+        #   ✓ Should create valid 'SingleLinkedList' instance
+
+        # Test integer list
+        #   ✓ Should create valid Integer 'SingleLinkedList' instance with the correct size
+        #   ✓ Integer list pop head should work correctly
+        #   ✓ Integer list pop tail should work correctly
+        #   ✓ Integer list contain should work correctly
+
+        # Test Person list
+        #   ✓ Should create valid Person 'SingleLinkedList' instance with the correct size
+        #   ✓ Person list pop head should work correctly
+        #   ✓ Person list pop tail should work correctly
+
+        # 8 passing (9ms)
+        ```
+
+</br>
+
 <hr>
 
 ### `Stack`
@@ -132,73 +164,4 @@ Complexity ordered in form smallest to largest:
     | Searching | **O(n)**
     | Size | **O(1)**
 
-
-- Sample:
-
-    - [source_code_token_pairing_validator.rs](https://github.com/wisonye/data-structure-implementation-by-rust/tree/master/src/source_code_token_pairing_validator.rs)
-
-        Run that test with the following command:
-
-        ```bash
-        # No debug info output
-        cargo watch -c --exec 'test token -- --nocapture'
-
-        # Print all debug info
-        cargo watch -c --exec 'test --features "enable_debug_code_token_pairing" token -- --nocapture'
-        ```
-
-<hr>
-
-### `Queue`
-
-- Concept:
-
-    A `Queue` is a one-ended linear data structure which models a real-world queue by having two primary operations:
-
-    ```
-                                 Queue-Back
-                                   ↓
-               -   -   -   -   -   - 
-    Dequeue ⇐ |*| |*| |*| |*| |*| |*| ⇐ Enqueue
-               -   -   -   -   -   - 
-               ↑
-             Queue-Front
-    ```
-
-
-    - `Enqueue/Adding/Offering`: add the element to the back.
-    - `Dequeue/Removing/Polling`: remove the element from the front.
-
-    </br>
-
-    It's a `First-in-first-out (FIFO)` model.
-
-- use cases:
-
-    - Any waiting line modes a queue. For example a lineup in super market counter.
-    - Web server request management (first come first serve).
-    - Do a `Breadth First Search (BFS)` on a graph
-
-- Complexity
-
-    | Complexity | Notation
-    |----------: | --------
-    | Enqueue | **O(1)**
-    | Dequeue | **O(1)**
-    | Peeking | **O(1)**
-    | Contains | **O(n)**
-    | Removal | **O(n)**
-    | Size | **O(1)**
-    | Is Empty | **O(1)**
-
-<hr>
-
-### `Priority Queue (PQ)`
-
-- Concept:
-
-    A `Priority Queue` is an **ADT** that works like a normal `Queue` except that `each element has a certain priority`.
-    And that priority value determines the removing order from the queue.
-
-    The element has to implement the `PartialEq` trait for supporting the priority comparison.
 
