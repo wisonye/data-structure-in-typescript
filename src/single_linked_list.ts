@@ -22,6 +22,7 @@ export interface SingleLinkedList<T> {
     append: (data: T) => void
     contain: (dataToCheck: T, compareFn?: (data1: T, data2: T) => boolean) => boolean
     printList: () => void
+    getListString: () => string
 }
 
 
@@ -64,6 +65,8 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
             const popValue = head.data
             head = head.next
             size--;
+
+            if (size <= 0) { tail = undefined }
             return popValue;
         },
 
@@ -163,6 +166,26 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
 
             // Join all node with the newline
             // console.log(`'SingleLinkedList' (${size} elements):\n\t`, listContent.join(`,\n\t `))
+        },
+
+        /**
+         * Walk through the list and return the entire content string
+         */
+        getListString: (): string => {
+            let currentNode = head
+            if (!currentNode) {
+                return `empty list`
+            }
+
+            const listContent: Array<string> = []
+
+            while (currentNode) {
+                listContent.push(JSON.stringify(currentNode.data))
+                currentNode = currentNode.next
+            }
+
+            // Join all node with ` --> `
+            return `(${size} elements): ${listContent.join(` --> `)}`
         }
     }
 
@@ -189,26 +212,6 @@ const testIntList = () => {
     console.log(`testList tail: ${JSON.stringify(testList.getTail())}`)
 }
 
-const testPopFrontOnIntList = () => {
-    const testList = createIntTestList()
-
-    let popValue = testList.popHead()
-    console.log(`popValue: `, popValue)
-    testList.printList()
-    popValue = testList.popHead()
-    console.log(`popValue: `, popValue)
-    testList.printList()
-    popValue = testList.popHead()
-    console.log(`popValue: `, popValue)
-    testList.printList()
-    popValue = testList.popHead()
-    console.log(`popValue: `, popValue)
-    testList.printList()
-    popValue = testList.popHead()
-    console.log(`popValue: `, popValue)
-    testList.printList()
-}
-
 const testContainOnIntList = () => {
     const testList = createIntTestList()
     console.log(`testIntList contain 0: ${testList.contain(0)}`)
@@ -219,10 +222,6 @@ const testContainOnIntList = () => {
     console.log(`testIntList contain 5: ${testList.contain(5)}`)
 }
 
-interface Person {
-    name: string
-    age?: number
-}
 
 const createPersonTestList = () => {
     const testList = createSingleLinkedList<Person>()
