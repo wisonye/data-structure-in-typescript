@@ -19,6 +19,7 @@ export interface SingleLinkedList<T> {
     getTail: () => Option<T>
     popHead: () => Option<T>
     popTail: () => Option<T>
+    insertAtHead: (data: T) => void
     append: (data: T) => void
     contain: (dataToCheck: T, compareFn?: (data1: T, data2: T) => boolean) => boolean
     printList: () => void
@@ -99,9 +100,25 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
         },
 
         /**
+         * Insert at `head`
+         */
+        insertAtHead: (data: T) => {
+            const newTailNode: Node<T> = { data, next: undefined }
+
+            if (!head) {
+                head = newTailNode
+                tail = newTailNode
+            } else {
+                newTailNode.next = head
+                head = newTailNode
+            }
+            size++
+        },
+
+        /**
          * Append to the end
          */
-        append: (data: T): void => {
+        append: (data: T) => {
             const newTailNode: Node<T> = { data, next: undefined }
 
             if (!tail) { head = newTailNode }
@@ -202,6 +219,15 @@ const testIntList = () => {
     testList.printList()
     console.log(`testList head: ${JSON.stringify(testList.getHead())}`)
     console.log(`testList tail: ${JSON.stringify(testList.getTail())}`)
+
+    testList.insertAtHead(0)
+    testList.insertAtHead(-1)
+    testList.append(5)
+    testList.append(6)
+
+    testList.printList()
+    console.log(`testList head: ${JSON.stringify(testList.getHead())}`)
+    console.log(`testList tail: ${JSON.stringify(testList.getTail())}`)
 }
 
-// testIntList()
+// testIntLis= t()
