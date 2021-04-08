@@ -104,19 +104,11 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
         append: (data: T): void => {
             const newTailNode: Node<T> = { data, next: undefined }
 
-            if (!head) {
-                head = newTailNode
-            } else {
-                let currentNode = head
-                while (currentNode.next) { currentNode = currentNode.next }
-                currentNode.next = newTailNode
+            if (!tail) { head = newTailNode }
+            else { tail.next = newTailNode }
 
-                // Keep updating the `tail` (pointer)
-                tail = newTailNode
-            }
-
-            // Remember to increase the size as well
-            size++
+            tail = newTailNode
+            size++;
         },
 
         /**
