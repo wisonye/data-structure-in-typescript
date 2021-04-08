@@ -3,123 +3,6 @@ import { expect } from 'chai';
 
 const PRINT_DEBUG_LOG = process.env.PRINT_DEBUG_LOG ? process.env.PRINT_DEBUG_LOG.toLowerCase() === 'true' : false
 
-describe("Create single_linked_list instance", () => {
-    it("Should create valid 'SingleLinkedList' instance", () => {
-        const testList = createSingleLinkedList<string>();
-        expect(testList).not.equals(undefined)
-        expect(testList.size()).to.equals(0)
-        expect(testList.getHead()).equals(undefined)
-        expect(testList.getTail()).equals(undefined)
-        expect(testList.popHead()).equals(undefined)
-        expect(testList.contain(`Hello`)).equals(false)
-        expect(testList.getListString()).to.equals(`empty list`)
-    })
-})
-
-
-describe("Test integer list", () => {
-    let testIntList: SingleLinkedList<number>
-
-    beforeEach(() => {
-        testIntList = createSingleLinkedList<number>();
-        testIntList.append(1)
-        testIntList.append(2)
-        testIntList.append(3)
-        testIntList.append(4)
-    })
-
-    it("Should create valid Integer 'SingleLinkedList' instance with the correct size", () => {
-        expect(testIntList).not.equals(undefined)
-        expect(testIntList.size()).to.equals(4)
-        expect(testIntList.getListString()).to.equals(`(4 elements): 1 --> 2 --> 3 --> 4`)
-
-        // head and tail
-        expect(testIntList.getHead()).equals(1)
-        expect(testIntList.getTail()).equals(4)
-
-        // pop test
-        expect(testIntList.popHead()).equals(1)
-        expect(testIntList.size()).to.equals(3)
-        expect(testIntList.popTail()).equals(4)
-        expect(testIntList.size()).to.equals(2)
-        expect(testIntList.contain(2)).equals(true)
-    })
-
-    it("Integer list pop head should work correctly", () => {
-        expect(testIntList).not.equals(undefined)
-        expect(testIntList.size()).to.equals(4)
-        expect(testIntList.getListString()).to.equals(`(4 elements): 1 --> 2 --> 3 --> 4`)
-
-        expect(testIntList.popHead()).equals(1)
-        expect(testIntList.getHead()).equals(2)
-        expect(testIntList.getTail()).equals(4)
-        expect(testIntList.size()).to.equals(3)
-        expect(testIntList.getListString()).to.equals(`(3 elements): 2 --> 3 --> 4`)
-
-        expect(testIntList.popHead()).equals(2)
-        expect(testIntList.getHead()).equals(3)
-        expect(testIntList.getTail()).equals(4)
-        expect(testIntList.size()).to.equals(2)
-        expect(testIntList.getListString()).to.equals(`(2 elements): 3 --> 4`)
-
-        expect(testIntList.popHead()).equals(3)
-        expect(testIntList.getHead()).equals(4)
-        expect(testIntList.getTail()).equals(4)
-        expect(testIntList.size()).to.equals(1)
-        expect(testIntList.getListString()).to.equals(`(1 elements): 4`)
-
-        expect(testIntList.popHead()).equals(4)
-        expect(testIntList.getHead()).equals(undefined)
-        expect(testIntList.getTail()).equals(undefined)
-        expect(testIntList.size()).to.equals(0)
-        expect(testIntList.getListString()).to.equals(`empty list`)
-    })
-
-    it("Integer list pop tail should work correctly", () => {
-        expect(testIntList).not.equals(undefined)
-        expect(testIntList.size()).to.equals(4)
-        expect(testIntList.getListString()).to.equals(`(4 elements): 1 --> 2 --> 3 --> 4`)
-
-        expect(testIntList.popTail()).equals(4)
-        expect(testIntList.getHead()).equals(1)
-        expect(testIntList.getTail()).equals(3)
-        expect(testIntList.size()).to.equals(3)
-        expect(testIntList.getListString()).to.equals(`(3 elements): 1 --> 2 --> 3`)
-
-        expect(testIntList.popTail()).equals(3)
-        expect(testIntList.getHead()).equals(1)
-        expect(testIntList.getTail()).equals(2)
-        expect(testIntList.size()).to.equals(2)
-        expect(testIntList.getListString()).to.equals(`(2 elements): 1 --> 2`)
-
-        expect(testIntList.popTail()).equals(2)
-        expect(testIntList.getHead()).equals(1)
-        expect(testIntList.getTail()).equals(1)
-        expect(testIntList.size()).to.equals(1)
-        expect(testIntList.getListString()).to.equals(`(1 elements): 1`)
-
-        expect(testIntList.popTail()).equals(1)
-        expect(testIntList.getHead()).equals(undefined)
-        expect(testIntList.getTail()).equals(undefined)
-        expect(testIntList.size()).to.equals(0)
-        expect(testIntList.getListString()).to.equals(`empty list`)
-    })
-
-    it("Integer list contain should work correctly", () => {
-        expect(testIntList).not.equals(undefined)
-        expect(testIntList.size()).to.equals(4)
-        expect(testIntList.getListString()).to.equals(`(4 elements): 1 --> 2 --> 3 --> 4`)
-
-        expect(testIntList.contain(0)).to.equals(false)
-        expect(testIntList.contain(1)).to.equals(true)
-        expect(testIntList.contain(2)).to.equals(true)
-        expect(testIntList.contain(3)).to.equals(true)
-        expect(testIntList.contain(4)).to.equals(true)
-        expect(testIntList.contain(5)).to.equals(false)
-    })
-})
-
-
 describe("Test Person list", () => {
     interface Person {
         name: string
@@ -152,6 +35,27 @@ describe("Test Person list", () => {
         // head and tail
         expect(compareFn(testPersonList.getHead() as Person, { name: `Andy Chen`, age: 43 })).to.equals(true)
         expect(compareFn(testPersonList.getTail() as Person, { name: `Dollice Chai`, age: 25 })).to.equals(true)
+    })
+
+    it("Person list insert at head and append should work correctly", () => {
+        expect(testPersonList).not.equals(undefined)
+        expect(testPersonList.size()).to.equals(3)
+        expect(testPersonList.getListString()).to.equals(`(3 elements): {"name":"Andy Chen","age":43} --> {"name":"Amy Lai","age":28} --> {"name":"Dollice Chai","age":25}`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
+
+        expect(testPersonList.insertAtHead({ name: `Rob A` }))
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
+        expect(compareFn(testPersonList.getHead() as Person, { name: `Rob A` })).to.equals(true)
+        expect(compareFn(testPersonList.getTail() as Person, { name: "Dollice Chai", age: 25 })).to.equals(true)
+        expect(testPersonList.size()).to.equals(4)
+
+        expect(testPersonList.insertAtHead({ name: `Roy B` }))
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
+        expect(compareFn(testPersonList.getHead() as Person, { name: `Roy B` })).to.equals(true)
+        expect(compareFn(testPersonList.getTail() as Person, { name: "Dollice Chai", age: 25 })).to.equals(true)
+        expect(testPersonList.size()).to.equals(5)
+        expect(testPersonList.getListString()).to.equals(`(5 elements): {"name":"Roy B"} --> {"name":"Rob A"} --> {"name":"Andy Chen","age":43} --> {"name":"Amy Lai","age":28} --> {"name":"Dollice Chai","age":25}`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
     })
 
     it("Person list pop head should work correctly", () => {
