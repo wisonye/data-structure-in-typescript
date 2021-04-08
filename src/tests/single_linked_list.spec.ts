@@ -1,6 +1,7 @@
 import { createSingleLinkedList, SingleLinkedList } from '../single_linked_list'
 import { expect } from 'chai';
 
+const PRINT_DEBUG_LOG = process.env.PRINT_DEBUG_LOG ? process.env.PRINT_DEBUG_LOG.toLowerCase() === 'true' : false
 
 describe("Create single_linked_list instance", () => {
     it("Should create valid 'SingleLinkedList' instance", () => {
@@ -146,6 +147,7 @@ describe("Test Person list", () => {
         expect(testPersonList).not.equals(undefined)
         expect(testPersonList.size()).to.equals(3)
         expect(testPersonList.getListString()).to.equals(`(3 elements): {"name":"Andy Chen","age":43} --> {"name":"Amy Lai","age":28} --> {"name":"Dollice Chai","age":25}`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
 
         // head and tail
         expect(compareFn(testPersonList.getHead() as Person, { name: `Andy Chen`, age: 43 })).to.equals(true)
@@ -156,47 +158,55 @@ describe("Test Person list", () => {
         expect(testPersonList).not.equals(undefined)
         expect(testPersonList.size()).to.equals(3)
         expect(testPersonList.getListString()).to.equals(`(3 elements): {"name":"Andy Chen","age":43} --> {"name":"Amy Lai","age":28} --> {"name":"Dollice Chai","age":25}`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
 
         expect(compareFn(testPersonList.popHead() as Person, { name: `Andy Chen`, age: 43 })).to.equals(true)
         expect(compareFn(testPersonList.getHead() as Person, { name: `Amy Lai`, age: 28 })).to.equals(true)
         expect(compareFn(testPersonList.getTail() as Person, { name: `Dollice Chai`, age: 25 })).to.equals(true)
         expect(testPersonList.size()).to.equals(2)
         expect(testPersonList.getListString()).to.equals(`(2 elements): {"name":"Amy Lai","age":28} --> {"name":"Dollice Chai","age":25}`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
 
         expect(compareFn(testPersonList.popHead() as Person, { name: `Amy Lai`, age: 28 })).to.equals(true)
         expect(compareFn(testPersonList.getHead() as Person, { name: `Dollice Chai`, age: 25 })).to.equals(true)
         expect(compareFn(testPersonList.getTail() as Person, { name: `Dollice Chai`, age: 25 })).to.equals(true)
         expect(testPersonList.size()).to.equals(1)
         expect(testPersonList.getListString()).to.equals(`(1 elements): {"name":"Dollice Chai","age":25}`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
 
         expect(compareFn(testPersonList.popHead() as Person, { name: `Dollice Chai`, age: 25 })).to.equals(true)
         expect(testPersonList.getHead()).to.equals(undefined)
         expect(testPersonList.getTail()).to.equals(undefined)
         expect(testPersonList.size()).to.equals(0)
         expect(testPersonList.getListString()).to.equals(`empty list`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
     })
 
     it("Person list pop tail should work correctly", () => {
         expect(testPersonList).not.equals(undefined)
         expect(testPersonList.size()).to.equals(3)
         expect(testPersonList.getListString()).to.equals(`(3 elements): {"name":"Andy Chen","age":43} --> {"name":"Amy Lai","age":28} --> {"name":"Dollice Chai","age":25}`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
 
         expect(compareFn(testPersonList.popTail() as Person, { name: `Dollice Chai`, age: 25 })).to.equals(true)
         expect(compareFn(testPersonList.getHead() as Person, { name: `Andy Chen`, age: 43 })).to.equals(true)
         expect(compareFn(testPersonList.getTail() as Person, { name: `Amy Lai`, age: 28 })).to.equals(true)
         expect(testPersonList.size()).to.equals(2)
         expect(testPersonList.getListString()).to.equals(`(2 elements): {"name":"Andy Chen","age":43} --> {"name":"Amy Lai","age":28}`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
 
         expect(compareFn(testPersonList.popTail() as Person, { name: `Amy Lai`, age: 28 })).to.equals(true)
         expect(compareFn(testPersonList.getHead() as Person, { name: `Andy Chen`, age: 43 })).to.equals(true)
         expect(compareFn(testPersonList.getTail() as Person, { name: `Andy Chen`, age: 43 })).to.equals(true)
         expect(testPersonList.size()).to.equals(1)
         expect(testPersonList.getListString()).to.equals(`(1 elements): {"name":"Andy Chen","age":43}`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
 
         expect(compareFn(testPersonList.popTail() as Person, { name: `Andy Chen`, age: 43 })).to.equals(true)
         expect(testPersonList.getHead()).to.equals(undefined)
         expect(testPersonList.getTail()).to.equals(undefined)
         expect(testPersonList.size()).to.equals(0)
         expect(testPersonList.getListString()).to.equals(`empty list`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
     })
 })
