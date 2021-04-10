@@ -23,6 +23,10 @@ describe("String linked list test", () => {
         expect(testStringList.getHead()).equals("TypeScript")
         expect(testStringList.getTail()).equals("Awesome!")
 
+        // peek test
+        expect(testStringList.peekTail()).equals("Awesome!")
+        expect(testStringList.size()).to.equals(3)
+
         // pop test
         expect(testStringList.popHead()).equals("TypeScript")
         expect(testStringList.size()).to.equals(2)

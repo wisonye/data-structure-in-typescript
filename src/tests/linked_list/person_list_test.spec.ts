@@ -35,6 +35,10 @@ describe("Person linked list test", () => {
         // head and tail
         expect(compareFn(testPersonList.getHead() as Person, { name: `Andy Chen`, age: 43 })).to.equals(true)
         expect(compareFn(testPersonList.getTail() as Person, { name: `Dollice Chai`, age: 25 })).to.equals(true)
+
+        // peek test
+        expect(compareFn(testPersonList.peekTail() as Person, { name: `Dollice Chai`, age: 25 })).to.equals(true)
+        expect(testPersonList.size()).to.equals(3)
     })
 
     it("Insert at head and append should work correctly", () => {

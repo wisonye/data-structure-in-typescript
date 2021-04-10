@@ -24,6 +24,10 @@ describe("Integer linked list test", () => {
         expect(testIntList.getHead()).equals(1)
         expect(testIntList.getTail()).equals(4)
 
+        // peek test
+        expect(testIntList.peekTail()).equals(4)
+        expect(testIntList.size()).to.equals(4)
+
         // pop test
         expect(testIntList.popHead()).equals(1)
         expect(testIntList.size()).to.equals(3)

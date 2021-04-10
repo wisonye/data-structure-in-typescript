@@ -19,6 +19,7 @@ export interface SingleLinkedList<T> {
     getTail: () => Option<T>
     popHead: () => Option<T>
     popTail: () => Option<T>
+    peekTail: () => Option<T>
     insertAtHead: (data: T) => void
     append: (data: T) => void
     contains: (dataToCheck: T, compareFn?: (data1: T, data2: T) => boolean) => boolean
@@ -97,6 +98,15 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
 
             size--;
             return popValue
+        },
+
+        /**
+         * Peek the tail but not remove it
+         */
+        peekTail: (): Option<T> => {
+            if (!tail) { return undefined; }
+
+            return tail.data
         },
 
         /**
