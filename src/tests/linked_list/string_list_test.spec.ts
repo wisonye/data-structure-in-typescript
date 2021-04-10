@@ -1,4 +1,4 @@
-import { createSingleLinkedList } from '../single_linked_list'
+import { createSingleLinkedList } from '../../linked_list/single_linked_list'
 import { expect } from 'chai';
 
 const PRINT_DEBUG_LOG = process.env.PRINT_DEBUG_LOG ? process.env.PRINT_DEBUG_LOG.toLowerCase() === 'true' : false
