@@ -3,7 +3,7 @@ import { expect } from 'chai';
 
 const PRINT_DEBUG_LOG = process.env.PRINT_DEBUG_LOG ? process.env.PRINT_DEBUG_LOG.toLowerCase() === 'true' : false
 
-describe("Test Person list", () => {
+describe("Person linked list test", () => {
     interface Person {
         name: string
         age?: number
@@ -37,7 +37,7 @@ describe("Test Person list", () => {
         expect(compareFn(testPersonList.getTail() as Person, { name: `Dollice Chai`, age: 25 })).to.equals(true)
     })
 
-    it("Person list insert at head and append should work correctly", () => {
+    it("Insert at head and append should work correctly", () => {
         expect(testPersonList).not.equals(undefined)
         expect(testPersonList.size()).to.equals(3)
         expect(testPersonList.getListString()).to.equals(`(3 elements): {"name":"Andy Chen","age":43} --> {"name":"Amy Lai","age":28} --> {"name":"Dollice Chai","age":25}`)
@@ -58,7 +58,7 @@ describe("Test Person list", () => {
         if (PRINT_DEBUG_LOG) { testPersonList.printList() }
     })
 
-    it("Person list pop head should work correctly", () => {
+    it("Pop head should work correctly", () => {
         expect(testPersonList).not.equals(undefined)
         expect(testPersonList.size()).to.equals(3)
         expect(testPersonList.getListString()).to.equals(`(3 elements): {"name":"Andy Chen","age":43} --> {"name":"Amy Lai","age":28} --> {"name":"Dollice Chai","age":25}`)
@@ -86,7 +86,7 @@ describe("Test Person list", () => {
         if (PRINT_DEBUG_LOG) { testPersonList.printList() }
     })
 
-    it("Person list pop tail should work correctly", () => {
+    it("Pop tail should work correctly", () => {
         expect(testPersonList).not.equals(undefined)
         expect(testPersonList.size()).to.equals(3)
         expect(testPersonList.getListString()).to.equals(`(3 elements): {"name":"Andy Chen","age":43} --> {"name":"Amy Lai","age":28} --> {"name":"Dollice Chai","age":25}`)
@@ -112,5 +112,17 @@ describe("Test Person list", () => {
         expect(testPersonList.size()).to.equals(0)
         expect(testPersonList.getListString()).to.equals(`empty list`)
         if (PRINT_DEBUG_LOG) { testPersonList.printList() }
+    })
+
+    it("containss should work correctly", () => {
+        expect(testPersonList).not.equals(undefined)
+        expect(testPersonList.size()).to.equals(3)
+        expect(testPersonList.getListString()).to.equals(`(3 elements): {"name":"Andy Chen","age":43} --> {"name":"Amy Lai","age":28} --> {"name":"Dollice Chai","age":25}`)
+        if (PRINT_DEBUG_LOG) { testPersonList.printList() }
+
+        expect(testPersonList.contains({ name: "AAA" }, compareFn)).to.equals(false)
+        expect(testPersonList.contains({ name: `Amy Lai`, age: 28 }, compareFn)).to.equals(true)
+        expect(testPersonList.contains({ name: `Andy Chen`, age: 43 }, compareFn)).to.equals(true)
+        expect(testPersonList.contains({ name: `Dollice Chai`, age: 25 }, compareFn)).to.equals(true)
     })
 })

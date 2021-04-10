@@ -21,7 +21,7 @@ export interface SingleLinkedList<T> {
     popTail: () => Option<T>
     insertAtHead: (data: T) => void
     append: (data: T) => void
-    contain: (dataToCheck: T, compareFn?: (data1: T, data2: T) => boolean) => boolean
+    contains: (dataToCheck: T, compareFn?: (data1: T, data2: T) => boolean) => boolean
     printList: () => void
     getListString: () => string
 }
@@ -134,7 +134,7 @@ export const createSingleLinkedList = <T>(): SingleLinkedList<T> => {
          * If `compareFn` not provided, then just compare the data with `===`
          * operator.
          */
-        contain: (dataToCheck: T, compareFn?: (data1: T, data2: T) => boolean): boolean => {
+        contains: (dataToCheck: T, compareFn?: (data1: T, data2: T) => boolean): boolean => {
             if (!head) { return false }
 
             let currentNode: Option<Node<T>> = head
